@@ -9,6 +9,9 @@ $ cd cloudflare-blog/2015-12-nm-single-rx-queue
 $ git clone https://github.com/luigirizzo/netmap deps/netmap
 ```
 
+Download and install LuaJIT:
+See http://luajit.org/download.html for details
+
 build the application:
 ```sh
 $ make
