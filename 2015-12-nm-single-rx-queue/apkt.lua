@@ -33,4 +33,12 @@ function apkt.hex_dump(str)
             .. string.rep("   ", 16 - len % 16) .. asc
 end
 
+function apkt.filter(str)
+    local len = string.len(str)
+
+    -- do some fancy stuff here - Return codes: 1 = DROP / 0 = PASS
+
+    return 0
+end
+
 return apkt

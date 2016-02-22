@@ -161,6 +161,7 @@ void dumphex(const void* data, size_t size) {
 
 static int filter_packet(lua_State *L, int cb_ref, char *buf, int len) {
     int offset = 0;
+    int z;
 
     printf("Type: 0x%x - 0x%04x - 0x%x\n Len: %d\n", *((uint8_t *) (buf + 14)), *((uint16_t *) (buf + 12)), *((uint8_t *) (buf + 23)), len);
 
@@ -178,6 +179,20 @@ static int filter_packet(lua_State *L, int cb_ref, char *buf, int len) {
     if ( lua_pcall(L, 2, 1, 0) != 0 ) {
         fprintf(stderr, "%s\n", lua_tostring(L, -1));
         exit(1);
+    }
+
+    // Retrieve result
+    if ( !lua_isnumber(L, -1) ) {
+        fprintf(stderr, "Lua function must return a number!\n");
+        exit(1);
+    }
+
+    z = lua_tonumber(L, -1);
+    lua_pop(L, 1);  // pop returned value
+
+    printf("Return value from LUA script: %d\n", z);
+    if (z) {
+        return 0;
     }
 
     // Allow STP

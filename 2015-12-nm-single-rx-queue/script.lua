@@ -4,9 +4,11 @@ m = require "apkt"
 io.write("LUA scripts loaded succesfully\n");
 
 function callback(buf, len)
+    local ret
     print(m.hex_dump(buf))
+    ret = m.filter(buf)
     print("Pkt len: " .. len)
-    return 0
+    return ret
 end
 
 function reload_all()
